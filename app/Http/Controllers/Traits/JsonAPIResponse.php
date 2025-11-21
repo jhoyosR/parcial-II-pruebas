@@ -18,10 +18,7 @@ trait JsonAPIResponse {
             'success' => true,
             'data'    => $result,
             'message' => $message,
-        ], 200, [
-            'Content-Type' => 'application/json; charset=UTF-8',
-            'charset' => 'utf-8'
-        ], JSON_UNESCAPED_UNICODE);
+        ], 200);
     }
 
     /**
@@ -32,10 +29,7 @@ trait JsonAPIResponse {
             'success' => false,
             'data'    => $result,
             'message' => $errorMsg,
-        ], $code, [
-            'Content-Type' => 'application/json; charset=UTF-8',
-            'charset' => 'utf-8'
-        ], JSON_UNESCAPED_UNICODE);
+        ], $code);
     }
 
 }

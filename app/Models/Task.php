@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class Task extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'users';
+    protected $table = 'tasks';
 
     protected $dates  = ['created_at', 'updated_at'];
 
@@ -21,8 +21,10 @@ class User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'user_id',
+        'title',
+        'description',
+        'is_completed',
     ];
 
     /**
@@ -31,16 +33,13 @@ class User extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'name' => 'string',
-        'email' => 'string',
+        'user_id'      => 'integer',
+        'title'        => 'string',
+        'description'  => 'string',
+        'is_completed' => 'boolean',
     ];
 
-    /**
-     * Obtiene las tareas asociadas
-     *
-     * @return HasMany
-     */
-    public function tasks(): HasMany {
-        return $this->hasMany(Task::class, 'user_id');
+    public function users(): BelongsTo {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
