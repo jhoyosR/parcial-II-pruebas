@@ -26,7 +26,7 @@ jobs:
           echo "DB_USERNAME=sail" >> .env
           echo "DB_PASSWORD=password" >> .env
 
-      - name: Start Sail Services (App, DB, Redis)
+      - name: Start Sail Services
         run: ./vendor/bin/sail up -d
         timeout-minutes: 5
         
