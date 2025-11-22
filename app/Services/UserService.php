@@ -22,7 +22,7 @@ class UserService {
      */
     public function getTasks(int $id): ?User {
         // Obtiene los registros 
-        $userTasks = User::with('tasks')->where('id', '=', $id)->get()->first();
+        $userTasks = User::with('tasks')->where('id', '=', $id)->first();
         return $userTasks;
     }
     
