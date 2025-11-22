@@ -39,11 +39,17 @@ jobs:
           ./vendor/bin/sail artisan key:generate
           ./vendor/bin/sail artisan migrate --force
 
+      - name: PHPStan (Static Analysis)
+        run: docker compose exec -u www-data laravel.test vendor/bin/phpstan analyse --memory-limit=1G
+
       - name: Run Unit Tests
         run: ./vendor/bin/sail artisan test --testsuite=Unit
 
       - name: Run Integration Tests
         run: ./vendor/bin/sail artisan test --testsuite=Feature
+
+      - name: Run System Tests
+        run: ./vendor/bin/sail artisan test --testsuite=System
         
       - name: Stop Sail Services
         if: always()

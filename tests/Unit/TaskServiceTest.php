@@ -38,6 +38,38 @@ class TaskServiceTest extends TestCase
         $this->assertDatabaseHas('tasks', ['title' => 'Backend']);
     }
 
+    public function test_can_update_task_state()
+    {
+        $dto = new UserDTO(
+            name        : 'José Alfredo',
+            email       : 'jespinosa@gmail.com',
+        );
+
+        $service = app(UserService::class);
+        $user = $service->create($dto);
+
+        $dtoTask = new TaskDTO(
+            user_id      : $user->id,
+            title        : 'Backend',
+            description  : 'Desarrollar backend',
+            is_completed : true
+        );
+
+        $serviceTask = app(TaskService::class);
+        $task = $serviceTask->create($dtoTask);
+
+        $this->assertDatabaseHas('tasks', ['title' => 'Backend', 'is_completed' => true]);
+
+        $updatedState = [
+            'is_completed' => false
+        ];
+
+        $updatedTask = $serviceTask->update($task->id, $updatedState);
+
+        $this->assertFalse($updatedTask->is_completed);
+        $this->assertDatabaseHas('tasks', ['title' => 'Backend', 'is_completed' => false]);
+    }
+
     public function test_can_delete_task() {
         $dto = new UserDTO(
             name        : 'José Alfredo',
